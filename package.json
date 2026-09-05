@@ -1,0 +1,56 @@
+{
+  "name": "vastavik-learning-desktop",
+  "version": "1.0.0",
+  "description": "Vastavik Learning Desktop — Study smarter with Graphify, AI Tutor, Courses & PYQs",
+  "main": "src/main/main.js",
+  "author": "Vastavik Learning",
+  "license": "MIT",
+  "private": true,
+  "scripts": {
+    "start": "electron .",
+    "dev": "electron . --dev",
+    "build": "electron-builder",
+    "build:win": "electron-builder --win",
+    "build:mac": "electron-builder --mac",
+    "build:linux": "electron-builder --linux",
+    "lint": "eslint src/**/*.js"
+  },
+  "dependencies": {
+    "electron-store": "8.2.0",
+    "marked": "9.1.6",
+    "pdf-parse": "1.1.1"
+  },
+  "devDependencies": {
+    "electron": "28.3.3",
+    "electron-builder": "24.13.3"
+  },
+  "build": {
+    "appId": "com.vastaviklearning.desktop",
+    "productName": "Vastavik Learning",
+    "copyright": "Copyright © 2026 Vastavik Learning",
+    "directories": {
+      "output": "dist"
+    },
+    "files": [
+      "src/**/*",
+      "assets/**/*",
+      "node_modules/**/*"
+    ],
+    "win": {
+      "target": "nsis",
+      "icon": "assets/icons/icon.ico"
+    },
+    "mac": {
+      "target": "dmg",
+      "icon": "assets/icons/icon.icns"
+    },
+    "linux": {
+      "target": "AppImage",
+      "icon": "assets/icons/icon.png"
+    },
+    "nsis": {
+      "oneClick": false,
+      "allowToChangeInstallationDirectory": true
+    }
+  }
+}

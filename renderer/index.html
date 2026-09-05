@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta http-equiv="Content-Security-Policy"
+    content="default-src 'self' https://api.vastaviklearning.com;
+             script-src 'self' 'unsafe-inline';
+             style-src 'self' 'unsafe-inline' https://fonts.googleapis.com;
+             font-src 'self' https://fonts.gstatic.com;
+             img-src 'self' data: blob: https:;
+             media-src 'self' blob: https:;
+             connect-src 'self' https://api.vastaviklearning.com https://generativelanguage.googleapis.com;" />
+  <title>Vastavik Learning</title>
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet" />
+
+  <!-- Design system + App styles -->
+  <link rel="stylesheet" href="../assets/css/design-system.css" />
+  <link rel="stylesheet" href="../assets/css/app.css" />
+</head>
+<body>
+  <!-- Custom window titlebar -->
+  <div id="titlebar" class="titlebar" data-drag>
+    <div class="titlebar__left">
+      <div class="titlebar__logo">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <rect width="24" height="24" rx="6" fill="#2563EB"/>
+          <path d="M7 8h10M7 12h7M7 16h5" stroke="white" stroke-width="2" stroke-linecap="round"/>
+        </svg>
+      </div>
+      <span class="titlebar__title">Vastavik Learning</span>
+    </div>
+    <div class="titlebar__controls">
+      <button class="titlebar__btn titlebar__btn--min" id="btn-minimize" title="Minimize" aria-label="Minimize">
+        <svg width="12" height="12" viewBox="0 0 12 12"><rect y="5.5" width="12" height="1" fill="currentColor"/></svg>
+      </button>
+      <button class="titlebar__btn titlebar__btn--max" id="btn-maximize" title="Maximize" aria-label="Maximize">
+        <svg width="12" height="12" viewBox="0 0 12 12"><rect x="0.5" y="0.5" width="11" height="11" rx="1.5" fill="none" stroke="currentColor"/></svg>
+      </button>
+      <button class="titlebar__btn titlebar__btn--close" id="btn-close" title="Close" aria-label="Close">
+        <svg width="12" height="12" viewBox="0 0 12 12"><line x1="1" y1="1" x2="11" y2="11" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><line x1="11" y1="1" x2="1" y2="11" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+      </button>
+    </div>
+  </div>
+
+  <!-- App shell -->
+  <div id="app-shell" class="app-shell">
+    <!-- Sidebar navigation -->
+    <nav id="sidebar" class="sidebar" aria-label="Main navigation">
+      <div class="sidebar__brand">
+        <div class="sidebar__logo" aria-hidden="true">
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none">
+            <rect width="24" height="24" rx="6" fill="#2563EB"/>
+            <path d="M7 8h10M7 12h7M7 16h5" stroke="white" stroke-width="2" stroke-linecap="round"/>
+          </svg>
+        </div>
+        <span class="sidebar__brand-text">Vastavik</span>
+        <button class="sidebar__collapse-btn" id="sidebar-toggle" title="Collapse sidebar" aria-label="Toggle sidebar">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M15 18l-6-6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+        </button>
+      </div>
+
+      <ul class="sidebar__nav" role="list">
+        <li><button class="sidebar__item" data-nav="dashboard" onclick="Router.navigate('dashboard')"><span class="sidebar__icon">🏠</span><span class="sidebar__label">Home</span></button></li>
+        <li><button class="sidebar__item" data-nav="courses" onclick="Router.navigate('courses')"><span class="sidebar__icon">📚</span><span class="sidebar__label">Courses</span></button></li>
+        <li><button class="sidebar__item" data-nav="graphify" onclick="Router.navigate('graphify')"><span class="sidebar__icon">📖</span><span class="sidebar__label">Graphify</span></button></li>
+        <li><button class="sidebar__item" data-nav="ai-chat" onclick="Router.navigate('ai-chat')"><span class="sidebar__icon">🤖</span><span class="sidebar__label">AI Tutor</span></button></li>
+        <li><button class="sidebar__item" data-nav="practice" onclick="Router.navigate('practice')"><span class="sidebar__icon">💻</span><span class="sidebar__label">Practice</span></button></li>
+        <li><button class="sidebar__item" data-nav="pyq" onclick="Router.navigate('pyq')"><span class="sidebar__icon">📄</span><span class="sidebar__label">PYQ Archive</span></button></li>
+        <li><button class="sidebar__item" data-nav="notes" onclick="Router.navigate('notes')"><span class="sidebar__icon">📝</span><span class="sidebar__label">My Notes</span></button></li>
+        <li><button class="sidebar__item" data-nav="leaderboard" onclick="Router.navigate('leaderboard')"><span class="sidebar__icon">🏆</span><span class="sidebar__label">Leaderboard</span></button></li>
+      </ul>
+
+      <div class="sidebar__bottom">
+        <button class="sidebar__item" data-nav="settings" onclick="Router.navigate('settings')"><span class="sidebar__icon">⚙️</span><span class="sidebar__label">Settings</span></button>
+        <div class="sidebar__user" id="sidebar-user" style="display:none">
+          <div class="sidebar__avatar" id="sidebar-avatar">U</div>
+          <div class="sidebar__user-info">
+            <span class="sidebar__user-name" id="sidebar-user-name">Student</span>
+            <span class="sidebar__user-role" id="sidebar-user-role">Free</span>
+          </div>
+          <button class="sidebar__logout-btn" onclick="AuthManager.logout()" title="Logout" aria-label="Logout">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4M16 17l5-5-5-5M21 12H9" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+          </button>
+        </div>
+      </div>
+    </nav>
+
+    <!-- Main content area -->
+    <main id="app-content" class="app-content" role="main" aria-live="polite">
+      <div class="page-loader"><div class="spinner"></div></div>
+    </main>
+  </div>
+
+  <!-- Toast notifications -->
+  <div id="toast-container" class="toast-container" aria-live="assertive" aria-atomic="true"></div>
+
+  <!-- Shared scripts -->
+  <script src="../src/shared/store.js"></script>
+  <script src="../src/shared/router.js"></script>
+  <script src="../src/shared/api.js"></script>
+  <script src="../src/shared/auth.js"></script>
+
+  <!-- Page modules -->
+  <script src="../src/renderer/pages/home.js"></script>
+  <script src="../src/renderer/pages/login.js"></script>
+  <script src="../src/renderer/pages/signup.js"></script>
+  <script src="../src/renderer/pages/dashboard.js"></script>
+  <script src="../src/renderer/pages/courses.js"></script>
+  <script src="../src/renderer/pages/lesson.js"></script>
+  <script src="../src/renderer/pages/graphify.js"></script>
+  <script src="../src/renderer/pages/ai-chat.js"></script>
+  <script src="../src/renderer/pages/practice.js"></script>
+  <script src="../src/renderer/pages/pyq.js"></script>
+  <script src="../src/renderer/pages/notes.js"></script>
+  <script src="../src/renderer/pages/leaderboard.js"></script>
+  <script src="../src/renderer/pages/settings.js"></script>
+
+  <!-- App bootstrap -->
+  <script src="../src/renderer/app.js"></script>
+</body>
+</html>
