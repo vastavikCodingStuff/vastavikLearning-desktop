@@ -64,12 +64,23 @@ class ApiError extends Error {
 // AUTH
 // ═══════════════════════════════════════════════════════════════════════════════
 
+async function getDeviceId() {
+  let id = await window.vastavik.store.get('device_id', null);
+  if (!id) {
+    id = 'desk_' + Math.random().toString(36).slice(2, 10) + Date.now().toString(36);
+    await window.vastavik.store.set('device_id', id);
+  }
+  return id;
+}
+
 const Auth = {
   async login(email, password) {
-    return request('POST', '/api/v1/auth/login', { email, password });
+    const device_fingerprint = await getDeviceId();
+    return request('POST', '/api/v1/auth/login', { email, password, device_fingerprint, device_name: 'Desktop', platform: 'desktop' });
   },
   async signup(name, email, password, board = 'ICSE', language = 'Java') {
-    return request('POST', '/api/v1/auth/signup', { name, email, password, board, language });
+    const device_fingerprint = await getDeviceId();
+    return request('POST', '/api/v1/auth/signup', { name, email, password, board, language, device_fingerprint, device_name: 'Desktop', platform: 'desktop' });
   },
   async refresh(refreshToken) {
     return request('POST', '/api/v1/auth/refresh', { refresh_token: refreshToken });
@@ -173,5 +184,17 @@ const System = {
   },
 };
 
+const Growth = {
+  async referralStatus() {
+    return request('GET', '/api/v1/referral/status', null, true);
+  },
+  async shareStatus() {
+    return request('GET', '/api/v1/share/status', null, true);
+  },
+  async pricingQuote() {
+    return request('GET', '/api/v1/pricing/quote', null, true);
+  },
+};
+
 // Export
-window.API = { Auth, Catalog, AI, Notes, PYQ, Code, Search, System, ApiError };
+window.API = { Auth, Catalog, AI, Notes, PYQ, Code, Search, System, Growth, ApiError, getDeviceId };
