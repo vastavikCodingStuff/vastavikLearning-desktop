@@ -56,6 +56,8 @@ Router.register('practice',    window.Pages.Practice);
 Router.register('pyq',         window.Pages.PYQ);
 Router.register('notes',       window.Pages.Notes);
 Router.register('leaderboard', window.Pages.Leaderboard);
+Router.register('refer',       window.Pages.Refer);
+Router.register('share',       window.Pages.Share);
 Router.register('settings',    window.Pages.Settings);
 
 // ── Auth state → sidebar user widget ─────────────────────────────────────────
